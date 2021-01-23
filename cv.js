@@ -89,7 +89,16 @@ class VC
 
 		requestAnimationFrame( () => this.draw() );
 
-		this.audioCtx = new window.AudioContext();
+		var AudioContext = window.AudioContext // Default
+				|| window.webkitAudioContext
+				|| false;
+
+		if(AudioContext) {
+			this.audioCtx = new AudioContext();
+		} else {
+			alert("Web Audio API is not supported in your browser...");
+		}
+
 		this.sampleRate = this.audioCtx.sampleRate;
 
 		this.audioInput = null;
